@@ -1,12 +1,26 @@
 const mongoose = require('mongoose');
 
 const nftSchema = new mongoose.Schema({
-    tokenId: { type: Number, required: true, unique: true },
-    name: { type: String, required: true },
-    description: { type: String },
-    image: { type: String },
+  contractAddress: {
+    type: String,
+    required: true
+  },
+  tokenId: {
+    type: String,
+    required: true
+  },
+  name: {
+    type: String,
+    default: 'No Name'
+  },
+  description: {
+    type: String,
+    default: 'No Description'
+  },
+  image: {
+    type: String,
+    default: 'No Image Available'
+  }
 });
 
-const NFT = mongoose.model('NFT', nftSchema);
-
-module.exports = NFT;
+module.exports = mongoose.model('NFT', nftSchema);
