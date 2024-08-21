@@ -37,12 +37,15 @@ async function fetchAndSaveNFTMetadata(contractAddress, tokenId) {
 
     // Safely handle potential undefined or empty media array
     const nftData = {
+      contractAddress: nft.contract.address,
       tokenId: nft.tokenId,
-      name: nft.title || 'No Name',
+      name: nft.name || nft.title || 'No Name',
       description: nft.description || 'No Description',
-      image: nft.media && Array.isArray(nft.media) && nft.media.length > 0 
-              ? nft.media[0].gateway 
-              : 'No Image Available',
+      image: nft.image?.originalUrl 
+          ? nft.image.originalUrl 
+          : nft.raw?.metadata?.image 
+          ? `https://ipfs.io/ipfs/${nft.raw.metadata.image.split('ipfs://')[1]}`
+          : 'No Image Available',
     };
 
     // Save to MongoDB
@@ -58,4 +61,5 @@ async function fetchAndSaveNFTMetadata(contractAddress, tokenId) {
 }
 
 // Replace with the desired contract address and token ID
-fetchAndSaveNFTMetadata("0x76be3b62873462d2142405439777e971754e8e77", "10570"); // Example contract address and token ID
+fetchAndSaveNFTMetadata("0x524cAB2ec69124574082676e6F654a18df49A048", "6198");
+// fetchAndSaveNFTMetadata("0x495f947276749Ce646f68AC8c248420045cb7b5e", "24913202380792386291683512650245515028805536071723299612486033281263467495425")
