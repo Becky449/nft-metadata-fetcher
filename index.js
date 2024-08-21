@@ -4,17 +4,6 @@ const connectDB = require('./db');
 const NFT = require('./models/NFT');
 require('dotenv').config();
 
-// const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/ac9f071ede3849e5b6d753e58573ed7f'));
-// const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/58d853d820744b848331cd9794de43ca', {
-//   timeout: 30000 // Set timeout to 30 seconds
-// }));
-// const options = {method: 'GET', headers: {accept: 'application/json'}};
-
-// fetch('https://eth-mainnet.g.alchemy.com/nft/v3/CWTUObpyImlVuUJlfn4n8JRjW-5pL_Zj/getNFTsForOwner?owner=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045&withMetadata=true&pageSize=100', options)
-//   .then(response => response.json())
-//   .then(response => console.log(response))
-//   .catch(err => console.error(err));
-const web3 = new Web3(new Web3.providers.HttpProvider('https://eth-mainnet.g.alchemy.com/nft/v3/CWTUObpyImlVuUJlfn4n8JRjW-5pL_Zj'));
 
 const uriABI = [
     {
