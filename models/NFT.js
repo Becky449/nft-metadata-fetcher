@@ -1,12 +1,19 @@
-const mongoose = require('mongoose');
+const express = require('express');
+const router = express.Router();
+const { fetchAndSaveNFTMetadata, getNFT } = require('../controllers/nftController');
 
-const nftSchema = new mongoose.Schema({
-  contractAddress: { type: String, required: true },
-  tokenId: { type: String, required: true },
-  name: { type: String },
-  description: { type: String },
-  image: { type: String },
+// Route to fetch and save NFT metadata
+router.post('/nfts/:contractAddress/:tokenId', async (req, res) => {
+  try {
+    const { contractAddress, tokenId } = req.params;
+    await fetchAndSaveNFTMetadata(contractAddress, tokenId);
+    res.status(200).json({ message: 'NFT metadata fetched and saved' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching or saving NFT metadata', error: error.message });
+  }
 });
 
-const NFT = mongoose.model('NFT', nftSchema);
-module.exports = NFT;
+// Route to get NFT metadata from MongoDB
+router.get('/nfts/:contractAddress/:tokenId', getNFT);
+
+module.exports = router;

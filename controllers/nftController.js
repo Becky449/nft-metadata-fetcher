@@ -9,7 +9,6 @@ const settings = {
 
 const alchemy = new Alchemy(settings);
 
-// Fetch and save NFT metadata by contract address and token ID
 const fetchAndSaveNFTMetadata = async (contractAddress, tokenId) => {
   try {
     const nft = await alchemy.nft.getNftMetadata(contractAddress, tokenId);
@@ -22,7 +21,7 @@ const fetchAndSaveNFTMetadata = async (contractAddress, tokenId) => {
       description: nft.description || 'No Description',
       image: nft.image?.originalUrl
           ? nft.image.originalUrl
-          : nft.raw?.metadata?.image 
+          : nft.raw?.metadata?.image
           ? `https://ipfs.io/ipfs/${nft.raw.metadata.image.split('ipfs://')[1]}`
           : 'No Image Available',
     };
@@ -31,11 +30,10 @@ const fetchAndSaveNFTMetadata = async (contractAddress, tokenId) => {
     await newNFT.save();
     console.log('NFT metadata saved to MongoDB:', nftData);
   } catch (error) {
-    console.error('Error fetching or saving NFT metadata:', error);
+    console.error('Error fetching or saving NFT metadata:', error.message);
   }
 };
 
-// Get NFT from MongoDB by contract address and token ID
 const getNFT = async (req, res) => {
   try {
     const { contractAddress, tokenId } = req.params;
